@@ -12,6 +12,8 @@
 
 #include "push_swap.h"
 
+/* modify all functions here to print result */
+
 void	push(t_list *src, t_list *dst)
 {
 	t_list	*new;
@@ -26,6 +28,10 @@ void	push(t_list *src, t_list *dst)
 	src->next = NULL;
 	ft_lstadd_back(&src, new);
 	ft_printf("Execute p%s:\n", name);
+	if (!ft_strncmp(name, "b", 1))
+		print_stacks(&src->next, &dst->next);
+	else
+		print_stacks(&dst->next, &src->next);
 }
 
 void	swap(t_list *stack)
@@ -40,6 +46,10 @@ void	swap(t_list *stack)
 	stack->next->content = tmp;
 	ft_printf("Execute s%s:\n", name);
 }
+
+/*	Moves content of list up one position 
+	Modify these to change list pointers
+	instead of content */
 
 void	rotate(t_list *a)
 {
@@ -57,6 +67,8 @@ void	rotate(t_list *a)
 	a->content = t;
 	ft_printf("Excecute r%s:\n", name);
 }
+
+/* Moves content of list down one position */
 
 void	rev_rotate(t_list *a)
 {

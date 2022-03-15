@@ -2,8 +2,9 @@
 
 int	main(int ac, char **av)
 {
-	t_list	*a;
-	t_list	*b;
+	t_list		*a;
+	t_list		*b;
+	t_grouplist	*group;
 
 	if (ac == 1)
 		return (1);
@@ -11,8 +12,10 @@ int	main(int ac, char **av)
 	lst_init(a, ac, av);
 	b = ft_lstnew("b");
 	print_stacks(&a->next, &b->next);
-	five_nums(a, b);
-/*	swap(a);
+	group = find_min_max(a);
+	push_group(a, b, group);
+/*	five_nums(a, b);
+	swap(a);
 	print_stacks(&a->next, &b->next);
 	push(a, b);
 	print_stacks(&a->next, &b->next);

@@ -41,7 +41,7 @@ t_grouplist	*find_min_max(t_list *a)
 	int			min;
 	int			max;
 
-	min = ft_atoi(a->content);
+	/*min = ft_atoi(a->content);
 	max = min;
 	while (a->next)
 	{
@@ -50,7 +50,9 @@ t_grouplist	*find_min_max(t_list *a)
 		if (ft_atoi(a->content) > max)
 			max = ft_atoi(a->content);
 		a = a->next;
-	}
+	}*/
+	min = find_min(a);
+	max = find_max(a);
 	return (group_divide(min, max));
 }
 char	*find_range(t_list *a, t_grouplist *group)
@@ -68,7 +70,7 @@ char	*find_range(t_list *a, t_grouplist *group)
 	return (NULL);
 }
 
-/* change to return char* to account for zero */
+/* change to return char* to account for zero ??? */
 int	find_max(t_list *stack)
 {
 	int	max;
@@ -100,21 +102,22 @@ int	find_min(t_list *stack)
 }
 
 /* Make better function for comparing two strings */
-
+/* Honestly can't remember what this is for... */
+/*
 int	find_next(t_list *stack, char *current)
 {
 	char	*next;
 
 	stack = stack->next;
-	next = current;
+	next = stack->next->content;
 	while (stack->next)
 	{
-		if (ft_atoi(next) > ft_atoi(stack->next->content))
+		if (ft_atoi(next) < ft_atoi(stack->next->content))
 			next = stack->next->content;
 		stack = stack->next;
 	}
 	return (ft_atoi(next));
-}
+}*/
 
 void	sort_group(t_list *a, t_list *b)
 {
@@ -148,8 +151,8 @@ void	push_group(t_list *a, t_list *b, t_grouplist *group)
 		}*/
 		push(a, b);
 	}
-	smart_rotate(b, find_max(b));
-	smart_rotate(a, find_next(a, b->next->content));
+	//smart_rotate(b, find_max(b));
+	smart_rotate(a, find_min(a));
 	sort_group(a, b);
 	group = group->next;
 	if (group)

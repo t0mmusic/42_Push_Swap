@@ -15,6 +15,13 @@
 
 # include "ft_printf.h"
 
+typedef struct s_grouplist
+{
+	int					min;
+	int					max;
+	struct s_grouplist	*next;
+}	t_grouplist;
+
 void	print_stacks(t_list **a, t_list **b);
 void	lst_init(t_list *a, int ac, char **av);
 void	swap(t_list *stack);
@@ -25,5 +32,14 @@ void	rev_rotate_both(t_list *a, t_list *b);
 void	rotate_both(t_list *a, t_list *b);
 void	three_nums(t_list *a, t_list *b);
 void	five_nums(t_list *a, t_list *b);
+
+t_grouplist	*find_min_max(t_list *a);
+void		push_group(t_list *a, t_list *b, t_grouplist *group);
+
+int	find_max(t_list *stack);
+int	find_min(t_list *stack);
+
+/* Logic Functions */
+void	smart_rotate(t_list *stack, int match);
 
 #endif

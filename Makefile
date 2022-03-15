@@ -18,6 +18,7 @@ $(NAME):
 	$(CC) $(CFLAGS) $(SRCS)
 	$(OBJ_DEST)
 	ar rcs $(NAME) $(OBJS)
+	$(CC) main.c $(NAME) -Iheaders
 
 bonus: $(NAME)
 

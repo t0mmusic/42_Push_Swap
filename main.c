@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   main.c                                             :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 21:11:41 by jbrown            #+#    #+#             */
+/*   Updated: 2022/03/16 21:11:53 by jbrown           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 int	main(int ac, char **av)
@@ -14,20 +26,5 @@ int	main(int ac, char **av)
 	print_stacks(&a->next, &b->next);
 	group = find_min_max(a);
 	push_group(a, b, group);
-/*	five_nums(a, b);
-	swap(a);
-	print_stacks(&a->next, &b->next);
-	push(a, b);
-	print_stacks(&a->next, &b->next);
-	rotate(a);
-	print_stacks(&a->next, &b->next);
-	rev_rotate(a);
-	print_stacks(&a->next, &b->next);
-	push(a, b);
-	print_stacks(&a->next, &b->next);
-	rotate_both(a->next, b->next);
-	print_stacks(&a->next, &b->next);
-	rev_rotate_both(a->next, b->next);
-	print_stacks(&a->next, &b->next);*/
 	return (0);
 }

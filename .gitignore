@@ -1,0 +1,5 @@
+*~
+*.a
+**/printf
+a.out
+*.swp

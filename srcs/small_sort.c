@@ -1,3 +1,15 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   small_sort.c                                       :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 21:13:31 by jbrown            #+#    #+#             */
+/*   Updated: 2022/03/16 21:13:33 by jbrown           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 
 void	three_two_one(t_list *a, t_list *b)
@@ -31,27 +43,27 @@ void	three_nums(t_list *a, t_list *b)
 	three = ft_atoi(a->next->next->next->content);
 	if (one > two)
 	{
-		if (two > three) //case 2
+		if (two > three)
 		{
 			three_two_one(a, b);
 		}
-		else if (one > three) //case 3
+		else if (one > three)
 		{
 			two_three_one(a, b);
 		}
-		else //case 1
+		else
 		{
 			two_one_three(a, b);
 		}
 	}
 	else if (two > three)
 	{
-		if (one > three) //case 5
+		if (one > three)
 		{
 			rev_rotate(a);
 			print_stacks(&a->next, &b->next);
 		}
-		else //case 4
+		else
 		{
 			swap(a);
 			print_stacks(&a->next, &b->next);

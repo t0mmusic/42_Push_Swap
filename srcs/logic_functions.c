@@ -1,4 +1,20 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   logic_functions.c                                  :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/16 21:13:08 by jbrown            #+#    #+#             */
+/*   Updated: 2022/03/16 21:13:10 by jbrown           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
+
+/*	Finds the centre of a stack and either rotates or 
+	reverse rotates the stack to get desired number to
+	the top. */
 
 void	smart_rotate(t_list *stack, int match)
 {
@@ -8,25 +24,21 @@ void	smart_rotate(t_list *stack, int match)
 
 	head = stack;
 	size = ft_lstsize(stack);
-	count = 0;
+	count = 1;
 	while (stack->next && ft_atoi(stack->next->content) != match)
 	{
 		count++;
 		stack = stack->next;
 	}
-	if (count <= (size / 2) + 1)
+	while (ft_atoi(head->next->content) != match)
 	{
-		while (ft_atoi(head->next->content) != match)
-		{
+		if (count < (size / 2) + 1)
 			rotate(head);
-		}
-	}
-	else
-	{
-		while (ft_atoi(head->next->content) != match)
-		{
+		else
 			rev_rotate(head);
-		}
 	}
-	ft_printf("Match: %i\nOther: %s\n", match, head->next->content);
 }
+
+/*	Add function to see if stack can be put in order by rotating. */
+/*	Add function to see if stack can be put in order by swapping a small number of times. */
+/*	Add function that checks both stacks to see if rotating both at once would be possible. */

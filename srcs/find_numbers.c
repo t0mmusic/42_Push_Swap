@@ -13,8 +13,7 @@
 #include "push_swap.h"
 
 /*	All of these functions are used to find specific numbers
-	in a stack. Currently most return integers, but should
-	be modified to return char pointers to account for zero. */
+	in a stack. */
 
 /*	Returns the value of a number within a specified range. This
 	is used to find values that will be pushed into stack b from
@@ -22,34 +21,34 @@
 	from top to bottom. Should be modified to find closest value to
 	edge of stack rather than first number it encounters. */
 
-char	*find_range(t_list *a, t_grouplist *group)
+char	*find_range(t_list *a, t_list *group)
 {
-	char	*num;
+	char	*group_min;
+	char	*previous;
 
-	a = a->next;
-	while (a->next)
+	if (group->next)
 	{
-		num = a->next->content;
-		if (ft_atoi(num) > group->min && ft_atoi(num) < group->max)
-			return (num);
-		a = a->next;
+		group_min = find_min(group);
+		previous = find_previous(a, group_min);
 	}
-	return (NULL);
+	else
+		previous = find_max(a);
+	return (previous);
 }
 
 /* change to return char* to account for zero ??? */
 /*	Finds and returns the largest number in a stack. */
 
-int	find_max(t_list *stack)
+char	*find_max(t_list *stack)
 {
-	int	max;
+	char	*max;
 
 	stack = stack->next;
-	max = ft_atoi(stack->content);
+	max = stack->content;
 	while (stack->next)
 	{
-		if (ft_atoi(stack->next->content) > max)
-			max = ft_atoi(stack->next->content);
+		if (ft_atoi(stack->next->content) > ft_atoi(max))
+			max = stack->next->content;
 		stack = stack->next;
 	}
 	return (max);
@@ -57,16 +56,16 @@ int	find_max(t_list *stack)
 
 /*	Finds and returns the smallest number in a stack. */
 
-int	find_min(t_list *stack)
+char	*find_min(t_list *stack)
 {
-	int	min;
+	char	*min;
 
 	stack = stack->next;
-	min = ft_atoi(stack->content);
+	min = stack->content;
 	while (stack->next)
 	{
-		if (ft_atoi(stack->next->content) < min)
-			min = ft_atoi(stack->next->content);
+		if (ft_atoi(stack->next->content) < ft_atoi(min))
+			min = stack->next->content;
 		stack = stack->next;
 	}
 	return (min);
@@ -77,17 +76,34 @@ int	find_min(t_list *stack)
 	This is used to push values from stack b into the 
 	correct position in stack a. */
 
-int	find_next(t_list *stack, char *current)
+char	*find_next(t_list *stack, char *current)
 {
-	int	next;
+	char	*next;
 
 	next = find_max(stack);
 	while (stack->next)
 	{
-		if (next > ft_atoi(stack->next->content) \
+		if (ft_atoi(next) > ft_atoi(stack->next->content) \
 			&& ft_atoi(current) < ft_atoi(stack->next->content))
-			next = ft_atoi(stack->next->content);
+			next = stack->next->content;
 		stack = stack->next;
 	}
 	return (next);
+}
+
+/*	Finds previous number in size. */
+
+char	*find_previous(t_list *stack, char *current)
+{
+	char	*previous;
+
+	previous = find_min(stack);
+	while (stack->next)
+	{
+		if (ft_atoi(previous) < ft_atoi(stack->next->content) \
+			&& ft_atoi(current) > ft_atoi(stack->next->content))
+			previous = stack->next->content;
+		stack = stack->next;
+	}
+	return (previous);
 }

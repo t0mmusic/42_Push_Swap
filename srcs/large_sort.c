@@ -12,58 +12,47 @@
 
 #include "push_swap.h"
 
-/*	Used to create new grouplist structures. Each group is contains
-	a range of numbers, so a grouplist is used to determine the
-	maximum and minimum limits of a group. */
+/*	This function dynamically assigns groups based on quantity of stack 
+	Consider also using average to determine min and max. It also need to make
+	sure that there are going to be numbers in that range. */
 
-t_grouplist	*new_grouplist(int min, int max)
+int	group_split(t_list *stack)
 {
-	t_grouplist	*new;
+	int	size_of_stack;
+	int	size_of_group;
+	int	no_of_groups;
+	int	no_in_group;
 
-	new = malloc(sizeof(*new));
-	if (!new)
-		return (NULL);
-	new->min = min;
-	new->max = max;
-	new->next = NULL;
-	return (new);
-}
-/*	This function should dynamically assign groups based on quantity of stack 
-	Consider also using average to determine min and max */
-
-t_grouplist	*group_divide(int min, int max)
-{
-	t_grouplist	*group;
-	t_grouplist	*head;
-	int			small;
-	int			medium;
-	int			large;
-
-	small = max / 4;
-	medium = max / 2;
-	large = small + medium;
-	group = new_grouplist(large - 1, max + 1);
-	head = group;
-	group->next = new_grouplist(medium - 1, large);
-	group = group->next;
-	group->next = new_grouplist(small - 1, medium);
-	group = group->next;
-	group->next = new_grouplist(min - 1, small);
-	return (head);
+	size_of_stack = ft_lstsize(stack);
+	size_of_group = 10;
+	no_of_groups = 2;
+	while (size_of_stack > size_of_group)
+	{
+		size_of_group *= 5;
+		no_of_groups *= 2;
+	}
+	no_in_group = size_of_stack / no_of_groups;
+	return (no_in_group);
 }
 
-/*	Initially used to find the maximum and minimum values
-	input to the program, and then splits the numbers into
-	4 groups. NOTE: This should be combined with group divide */
-
-t_grouplist	*find_min_max(t_list *a)
+void	group_push(t_list *a, t_list *b, t_list *group, int groupsize)
 {
-	int			min;
-	int			max;
+	int		i;
+	char	*current;
 
-	min = find_min(a);
-	max = find_max(a);
-	return (group_divide(min, max));
+	i = 1;
+	while (i < groupsize)
+	{
+		current = find_range(a, group);
+		smart_rotate(a, ft_atoi(current));
+		push(a, b);
+		ft_lstadd_back(&group, ft_lstnew(current));
+		i++;
+	}
+	smart_rotate(a, ft_atoi(find_next(a, find_max(b))));
+	sort_group(a, b);
+	if (ft_atoi(find_min(a)) != ft_atoi(find_min(group)))
+		group_push(a, b, group, groupsize);
 }
 
 /*	Pushes everything from stack b into stack a, always
@@ -71,36 +60,11 @@ t_grouplist	*find_min_max(t_list *a)
 
 void	sort_group(t_list *a, t_list *b)
 {
-	int	max;
 
 	if (b->next)
 	{
-		max = find_max(b);
-		smart_rotate(b, max);
+		smart_rotate(b, ft_atoi(find_max(b)));
 		push(b, a);
 		sort_group(a, b);
-	}
-}
-
-/*	Recursively moves groups from stack a to stack b, sorts them, 
-	and then returns them to an appropriate position in stack a. */
-
-void	push_group(t_list *a, t_list *b, t_grouplist *group)
-{
-	char	*num;
-
-	while (find_range(a, group))
-	{
-		num = find_range(a, group);
-		smart_rotate(a, ft_atoi(num));
-		push(a, b);
-	}
-	smart_rotate(b, find_max(b)); //when find_max is modified to return string delete this
-	smart_rotate(a, find_next(a, b->next->content)); //this should use find_max(b) as last paramater
-	sort_group(a, b);
-	group = group->next;
-	if (group)
-	{
-		push_group(a, b, group);
 	}
 }

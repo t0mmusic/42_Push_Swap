@@ -16,7 +16,9 @@ int	main(int ac, char **av)
 {
 	t_list		*a;
 	t_list		*b;
-	t_grouplist	*group;
+	t_list		*group;
+	int			no_in_group;
+	//t_grouplist	*group;
 
 	if (ac == 1)
 		return (1);
@@ -24,7 +26,16 @@ int	main(int ac, char **av)
 	lst_init(a, ac, av);
 	b = ft_lstnew("b");
 	print_stacks(&a->next, &b->next);
-	group = find_min_max(a);
-	push_group(a, b, group);
+	if (rotate_check(a))
+		{
+			print_stacks(&a->next, &b->next);
+			return (0);
+		}
+	//group = find_min_max(a);
+	no_in_group = group_split(a);
+	group = ft_lstnew("group");
+	group_push(a, b, group, no_in_group);
+	//push_group(a, b, group);
+	print_stacks(&a->next, &b->next);
 	return (0);
 }

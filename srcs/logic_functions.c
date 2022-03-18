@@ -39,6 +39,28 @@ void	smart_rotate(t_list *stack, int match)
 	}
 }
 
+/*	Returns list at point where it is out of order. */
+
+t_list	*order_check(t_list *stack)
+{
+	int	current;
+	int	next;
+
+	if (stack->next->next)
+		next = ft_atoi(stack->next->next->content);
+	else
+		return (stack);
+	current = ft_atoi(stack->next->content);
+	while (stack->next->next && current < next)
+	{
+		current = next;
+		stack = stack->next;
+		if (stack->next->next)
+			next = ft_atoi(stack->next->next->content);
+	}
+	return (stack);
+}
+
 /*	Checks to see if the current stack can be put in the right order
 	By rotating it. */
 
@@ -46,39 +68,54 @@ int	rotate_check(t_list *stack)
 {
 	t_list	*head;
 	int		pivot;
-	int		current;
-	int		next;
 
 	head = stack;
-	current = ft_atoi(stack->next->content);
-	next = ft_atoi(stack->next->next->content);
-	while (stack->next->next && current < next)
-	{
-		current = next;
-		stack = stack->next;
-		if (stack->next->next)
-			next = ft_atoi(stack->next->next->content);
-	}
+	stack = order_check(stack);
 	if (!stack->next->next)
 		return (1);
 	stack = stack->next;
 	pivot = ft_atoi(stack->next->content);
-	current = pivot;
-	if (stack->next->next)
-		next = ft_atoi(stack->next->next->content);
-	while (stack->next->next && current < next)
-	{
-		current = next;
-		stack = stack->next;
-		if (stack->next->next)
-			next = ft_atoi(stack->next->next->content);
-	}
+	stack = order_check(stack);
 	if (!stack->next->next)
 	{
 		smart_rotate(head, pivot);
 		return (1);
 	}
 	return (0);
+}
+
+/*	checks a stack against a reference list to see which number matched 
+	will be able to be pushed with the fewest number of rotations. */
+
+char	*closest_to_edge(t_list *stack, t_list *reference)
+{
+	int		size;
+	int		closest;
+	int		match;
+	t_list	*head;
+
+	head = stack;
+	size = ft_lstsize(stack);
+	closest = size / 2 + 1;
+	while (reference->next)
+	{
+		match = 0;
+		while (ft_atoi(stack->next->content) != ft_atoi(reference->next->content))
+		{
+			stack = stack->next;
+			match++;
+		}
+		reference = reference->next;
+		stack = head;
+	}
+	closest = match;//this needs to match the smallest number of rotations somehow???
+	match = 0;
+	while (match < closest)
+	{
+		stack = stack->next;
+		match++;
+	}
+	return (stack->next->content);
 }
 
 /*	Add function to see if stack can be put in order by swapping a small number of times. */

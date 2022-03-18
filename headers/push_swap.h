@@ -39,12 +39,14 @@ void	sort_group(t_list *a, t_list *b);
 /*	Functions for finding specific numbers */
 char	*find_max(t_list *stack);
 char	*find_min(t_list *stack);
-char	*find_range(t_list *a, t_list *group);
+char	*find_range(t_list *a, t_list *group, int groupsize);
 char	*find_next(t_list *stack, char *current);
 char	*find_previous(t_list *stack, char *current);
 
 /* Logic Functions */
 void	smart_rotate(t_list *stack, int match);
 int		rotate_check(t_list *stack);
+t_list	*order_check(t_list *stack);
+char	*closest_to_edge(t_list *stack, t_list *reference);
 
 #endif

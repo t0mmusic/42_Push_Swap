@@ -21,19 +21,37 @@
 	from top to bottom. Should be modified to find closest value to
 	edge of stack rather than first number it encounters. */
 
-char	*find_range(t_list *a, t_list *group)
+char	*find_range(t_list *a, t_list *group, int groupsize)
 {
-	char	*group_min;
-	char	*previous;
+	char	*current;
+	t_list	*head;
+	t_list	*tmp;
+	int		i;
 
-	if (group->next)
+	head = group;
+	current = find_max(a);
+	tmp = ft_lstnew("temporary");
+	while (group->next)
 	{
-		group_min = find_min(group);
-		previous = find_previous(a, group_min);
+		if (ft_atoi(current) == ft_atoi(group->next->content))
+		{
+			group = head;
+			current = find_previous(a, current);
+		}
+		else
+			group = group->next;
 	}
-	else
-		previous = find_max(a);
-	return (previous);
+	return (current); //this currently prevents an infinite loop cause by closest_to_edge, fix.
+	i = 1;
+	while (i <= groupsize)
+	{
+		ft_lstadd_back(&tmp, ft_lstnew(current));
+		current = find_previous(a, current);
+		i++;
+	}
+	current = closest_to_edge(a, tmp);
+	//free tmp;
+	return (current);
 }
 
 /* change to return char* to account for zero ??? */
@@ -79,7 +97,9 @@ char	*find_min(t_list *stack)
 char	*find_next(t_list *stack, char *current)
 {
 	char	*next;
+	t_list	*head;
 
+	head = stack;
 	next = find_max(stack);
 	while (stack->next)
 	{
@@ -87,6 +107,10 @@ char	*find_next(t_list *stack, char *current)
 			&& ft_atoi(current) < ft_atoi(stack->next->content))
 			next = stack->next->content;
 		stack = stack->next;
+	}
+	if (ft_atoi(current) > ft_atoi(next))
+	{
+		return (find_min(head));
 	}
 	return (next);
 }

@@ -84,6 +84,27 @@ int	rotate_check(t_list *stack)
 	return (0);
 }
 
+/*	Figures out how close to the edge current number is
+	and if it is closer than the previous closest. */
+
+int	find_closest(int current, int check, int total)
+{
+	int	middle;
+	int current_return;
+	int	check_return;
+
+	middle = total / 2 + 1;
+	check_return = check;
+	current_return = current;
+	if (current > middle)
+		current = total - current + 1;
+	if (check > middle)
+		check = total - check + 1;
+	if (check < current)
+		return (check_return);
+	return (current_return);
+}
+
 /*	checks a stack against a reference list to see which number matched 
 	will be able to be pushed with the fewest number of rotations. */
 
@@ -107,8 +128,8 @@ char	*closest_to_edge(t_list *stack, t_list *reference)
 		}
 		reference = reference->next;
 		stack = head;
+		closest = find_closest(closest, match, size);
 	}
-	closest = match;//this needs to match the smallest number of rotations somehow???
 	match = 0;
 	while (match < closest)
 	{

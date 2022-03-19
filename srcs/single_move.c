@@ -12,7 +12,10 @@
 
 #include "push_swap.h"
 
-/* modify all functions here to print result */
+/*	Takes the first element from src stack and
+	moves it to the top of dst stack. Everything
+	in src moves up one element, everything in dst
+	moves down one. */
 
 void	push(t_list *src, t_list *dst)
 {
@@ -24,15 +27,17 @@ void	push(t_list *src, t_list *dst)
 	back = ft_lstnew(src->next->content);
 	ft_lstadd_front(&dst->next, back);
 	new = src->next->next;
-	free(src->next);
 	src->next = NULL;
 	ft_lstadd_back(&src, new);
 	ft_printf("Execute p%s:\n", name);
-	if (!ft_strncmp(name, "b", 1))
+	/*if (!ft_strncmp(name, "b", 1))
 		print_stacks(&src->next, &dst->next);
 	else
-		print_stacks(&dst->next, &src->next);
+		print_stacks(&dst->next, &src->next);*/
 }
+
+/*	Swaps first element in stack with second
+	Element in stack. */
 
 void	swap(t_list *stack)
 {
@@ -47,52 +52,38 @@ void	swap(t_list *stack)
 	ft_printf("Execute s%s:\n", name);
 }
 
-/*	Moves content of list up one position 
-	Modify these to change list pointers
-	instead of content */
+/*	Takes first number in list and moves it to last */
 
-void	rotate(t_list *a)
+void	rotate(t_list *stack)
 {
-	char	*t;
+	t_list	*rot;
 	char	*name;
 
-	name = a->content;
-	a = a->next;
-	t = a->content;
-	while (a->next)
-	{
-		a->content = a->next->content;
-		a = a->next;
-	}
-	a->content = t;
+	name = stack->content;
+	rot = stack->next;
+	stack->next = stack->next->next;
+	rot->next = NULL;
+	ft_lstadd_back(&stack, rot);
 	ft_printf("Excecute r%s:\n", name);
 }
 
-/* Moves content of list down one position */
+/* Takes last number in list and moves it to first */
 
-void	rev_rotate(t_list *a)
+void	rev_rotate(t_list *stack)
 {
-	char	*t1;
-	char	*t2;
 	char	*name;
-	t_list	*first;
+	t_list	*head;
+	t_list	*rot1;
+	t_list	*rot2;
 
-	name = a->content;
-	a = a->next;
-	first = a;
-	if (a->next)
-	{
-		t1 = a->next->content;
-		a->next->content = a->content;
-		a = a->next;
-	}
-	while (a->next)
-	{
-		t2 = a->next->content;
-		a->next->content = t1;
-		t1 = t2;
-		a = a->next;
-	}
-	first->content = t1;
+	name = stack->content;
+	head = stack;
+	rot1 = stack->next;
+	rot2 = ft_lstlast(stack);
+	while(stack->next->next)
+		stack = stack->next;
+	stack->next = NULL;
+	head->next = rot2;
+	rot2->next = rot1;
 	ft_printf("Excecute rr%s:\n", name);
 }

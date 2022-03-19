@@ -41,7 +41,6 @@ char	*find_range(t_list *a, t_list *group, int groupsize)
 		else
 			group = group->next;
 	}
-	return (current); //this currently prevents an infinite loop cause by closest_to_edge, fix.
 	i = 1;
 	while (i <= groupsize)
 	{

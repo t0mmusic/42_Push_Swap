@@ -12,6 +12,10 @@
 
 #include "push_swap.h"
 
+/*	This should be changed to just call rotate for both
+	stacks, add toggle in rotate and rev rotate to turn off
+	printing. */
+
 void	rotate_both(t_list *a, t_list *b)
 {
 	char	*t;

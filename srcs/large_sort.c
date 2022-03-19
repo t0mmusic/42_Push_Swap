@@ -42,30 +42,23 @@ int	group_split(t_list *stack)
 void	group_push(t_list *a, t_list *b, t_list *group, int groupsize)
 {
 	int		i;
-	//static int	j;
 	char	*current;
 	int		current_size;
 
-	//j++;
-	//if (j > 2)
-	//	return ;
 	current_size = groupsize;
-	i = 1;
+	i = 0;
 	while (i < groupsize)
 	{
-		if (rotate_check(a))
-			break ;
 		current = find_range(a, group, current_size);
 		smart_rotate(a, ft_atoi(current));
 		push(a, b);
+		//print_stacks(&a->next, &b->next);
 		ft_lstadd_back(&group, ft_lstnew(current));
 		current_size--;
 		i++;
 	}
 	smart_rotate(a, ft_atoi(find_next(a, find_max(b))));
 	sort_group(a, b);
-	if (rotate_check(a))
-		return ;
 	if (ft_atoi(find_min(a)) != ft_atoi(find_min(group)))
 		group_push(a, b, group, groupsize);
 }
@@ -80,6 +73,7 @@ void	sort_group(t_list *a, t_list *b)
 	{
 		smart_rotate(b, ft_atoi(find_max(b)));
 		push(b, a);
+		//print_stacks(&a->next, &b->next);
 		sort_group(a, b);
 	}
 }

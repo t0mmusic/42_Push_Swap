@@ -8,6 +8,10 @@ SRCS = srcs/*.c
 
 OBJ_DEST = mv *.o srcs
 
+CHECKER = tester/checker.c
+
+GET_NEXT_LINE = tester/get_next_line/get_next_line.c tester/get_next_line/get_next_line_utils.c
+
 OBJS = $(SRCS:.c=.o)
 
 all: $(NAME)
@@ -18,9 +22,10 @@ $(NAME):
 	$(CC) $(CFLAGS) $(SRCS)
 	$(OBJ_DEST)
 	ar rcs $(NAME) $(OBJS)
-	$(CC) main.c $(NAME) -Iheaders
+	$(CC) main.c $(NAME) -Iheaders -o push_swap
 
-bonus: $(NAME)
+bonus: all
+	$(CC) $(CHECKER) $(GET_NEXT_LINE) $(NAME) -D BUFFER_SIZE=10 -Iheaders -o checker
 
 clean:
 	$(MAKE) clean -C ./printf
@@ -34,4 +39,4 @@ fclean: clean
 
 re: fclean all
 
-.PHONY: all clean fclean re
+.PHONY: all clean fclean bonus re

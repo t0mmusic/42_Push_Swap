@@ -24,8 +24,8 @@ int	group_split(t_list *stack)
 	int	no_in_group;
 
 	size_of_stack = ft_lstsize(stack);
-	size_of_group = 10;
-	no_of_groups = 1;
+	size_of_group = 11;
+	no_of_groups = 2;
 	while (size_of_stack > size_of_group)
 	{
 		size_of_group += 10;
@@ -47,7 +47,7 @@ void	group_push(t_list *a, t_list *b, t_list *group, int groupsize)
 
 	current_size = groupsize;
 	i = 0;
-	while (i < groupsize)
+	while (i < groupsize && a->next)
 	{
 		current = find_range(a, group, current_size);
 		smart_rotate(a, ft_atoi(current));
@@ -57,9 +57,10 @@ void	group_push(t_list *a, t_list *b, t_list *group, int groupsize)
 		current_size--;
 		i++;
 	}
-	smart_rotate(a, ft_atoi(find_next(a, find_max(b))));
+	if (a->next)
+		smart_rotate(a, ft_atoi(find_next(a, find_max(b))));
 	sort_group(a, b);
-	if (ft_atoi(find_min(a)) != ft_atoi(find_min(group)))
+	if (ft_lstsize(a) != ft_lstsize(group) && !rotate_check(a))//max
 		group_push(a, b, group, groupsize);
 }
 

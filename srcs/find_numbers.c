@@ -29,14 +29,14 @@ char	*find_range(t_list *a, t_list *group, int groupsize)
 	int		i;
 
 	head = group;
-	current = find_max(a);
+	current = find_min(a);//max
 	tmp = ft_lstnew("temporary");
 	while (group->next)
 	{
 		if (ft_atoi(current) == ft_atoi(group->next->content))
 		{
 			group = head;
-			current = find_previous(a, current);
+			current = find_next(a, current);//previous
 		}
 		else
 			group = group->next;
@@ -45,7 +45,7 @@ char	*find_range(t_list *a, t_list *group, int groupsize)
 	while (i <= groupsize)
 	{
 		ft_lstadd_back(&tmp, ft_lstnew(current));
-		current = find_previous(a, current);
+		current = find_next(a, current);//previous
 		i++;
 	}
 	current = closest_to_edge(a, tmp);

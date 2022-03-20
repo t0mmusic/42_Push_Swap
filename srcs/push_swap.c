@@ -50,7 +50,7 @@ void	lst_init(t_list *a, int ac, char **av)
 	current = first;
 	while (i < ac - 1)
 	{
-		if (av[i + 1])
+		if (av[i + 1] && ft_isdigit(av[i + 1][0]))//modify this to check for numbers and spaces
 		{
 			current = ft_lstnew(av[i + 1]);
 			ft_lstadd_back(&first, current);
@@ -58,5 +58,5 @@ void	lst_init(t_list *a, int ac, char **av)
 		i++;
 	}
 	ft_lstadd_back(&a, first);
-	ft_printf("Init a and b:\n");
+	//ft_printf("Init a and b:\n");
 }

@@ -28,8 +28,8 @@ void	rev_rotate(t_list *a);
 void	rev_rotate_both(t_list *a, t_list *b);
 
 /*	Small sort functions */
-void	three_nums(t_list *a, t_list *b);
-void	five_nums(t_list *a, t_list *b);
+void	small_sort(t_list *a, t_list *b, t_list *group);
+void	three_nums(t_list *a);
 
 /*	Group allocation functions */
 int		group_split(t_list *stack);

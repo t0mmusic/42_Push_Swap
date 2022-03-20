@@ -29,7 +29,7 @@ void	push(t_list *src, t_list *dst)
 	new = src->next->next;
 	src->next = NULL;
 	ft_lstadd_back(&src, new);
-	ft_printf("Execute p%s:\n", name);
+	ft_printf("p%s\n", name);
 	/*if (!ft_strncmp(name, "b", 1))
 		print_stacks(&src->next, &dst->next);
 	else
@@ -49,7 +49,7 @@ void	swap(t_list *stack)
 	tmp = stack->content;
 	stack->content = stack->next->content;
 	stack->next->content = tmp;
-	ft_printf("Execute s%s:\n", name);
+	ft_printf("s%s\n", name);
 }
 
 /*	Takes first number in list and moves it to last */
@@ -64,7 +64,7 @@ void	rotate(t_list *stack)
 	stack->next = stack->next->next;
 	rot->next = NULL;
 	ft_lstadd_back(&stack, rot);
-	ft_printf("Excecute r%s:\n", name);
+	ft_printf("r%s\n", name);
 }
 
 /* Takes last number in list and moves it to first */
@@ -85,5 +85,5 @@ void	rev_rotate(t_list *stack)
 	stack->next = NULL;
 	head->next = rot2;
 	rot2->next = rot1;
-	ft_printf("Excecute rr%s:\n", name);
+	ft_printf("rr%s\n", name);
 }

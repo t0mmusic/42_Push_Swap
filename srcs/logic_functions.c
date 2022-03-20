@@ -30,7 +30,7 @@ void	smart_rotate(t_list *stack, int match)
 		count++;
 		stack = stack->next;
 	}
-	while (ft_atoi(head->next->content) != match)
+	while (head->next && ft_atoi(head->next->content) != match)
 	{
 		if (count < (size / 2) + 1)
 			rotate(head);

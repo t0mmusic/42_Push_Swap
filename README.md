@@ -17,5 +17,8 @@ Reverse Rotate takes the very last element in the stack and puts it in this firs
 These apply rotate or reverse rotate to both stacks in one move.
 # Goal
 Any time one of the above movements is applied is counted as one move. The goal of this project is to sort the numbers using as few moves as possible.
+# Bonus
+Bonus marks for this project are earned by making an application called 'checker' which validates whether the 'push_swap' application is functioning correctly. 
+This application can be run in the command line with: <br /> ARG="number string"; ./push_swap $ARG | ./checker $ARG
 # Status
-Ongoing. Currently sorts stacks that don't contain zero, but not very efficiently.
+Ongoing. Testing now seems to sort numbers correctly, but extra steps can be made to improve efficiency.

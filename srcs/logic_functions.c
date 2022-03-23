@@ -75,8 +75,11 @@ int	rotate_check(t_list *stack)
 		return (1);
 	stack = stack->next;
 	pivot = ft_atoi(stack->next->content);
+	if (pivot != ft_atoi(find_min(head)))
+		return (0);
 	stack = order_check(stack);
-	if (!stack->next->next)
+	if (!stack->next->next && ft_atoi(head->next->content)
+		> ft_atoi(stack->next->content))
 	{
 		smart_rotate(head, pivot);
 		return (1);
@@ -90,7 +93,7 @@ int	rotate_check(t_list *stack)
 int	find_closest(int current, int check, int total)
 {
 	int	middle;
-	int current_return;
+	int	current_return;
 	int	check_return;
 
 	middle = total / 2 + 1;
@@ -121,7 +124,8 @@ char	*closest_to_edge(t_list *stack, t_list *reference)
 	while (reference->next)
 	{
 		match = 0;
-		while (ft_atoi(stack->next->content) != ft_atoi(reference->next->content))
+		while (ft_atoi(stack->next->content)
+			!= ft_atoi(reference->next->content))
 		{
 			stack = stack->next;
 			match++;
@@ -139,5 +143,7 @@ char	*closest_to_edge(t_list *stack, t_list *reference)
 	return (stack->next->content);
 }
 
-/*	Add function to see if stack can be put in order by swapping a small number of times. */
-/*	Add function that checks both stacks to see if rotating both at once would be possible. */
+/*	Add function to see if stack can be put in order by swapping a 
+	small number of times. */
+/*	Add function that checks both stacks to see if rotating both at 
+	once would be possible. */

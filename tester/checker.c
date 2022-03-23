@@ -1,7 +1,33 @@
+/* ************************************************************************** */
+/*                                                                            */
+/*                                                        :::      ::::::::   */
+/*   checker.c                                          :+:      :+:    :+:   */
+/*                                                    +:+ +:+         +:+     */
+/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*                                                +#+#+#+#+#+   +#+           */
+/*   Created: 2022/03/23 11:37:16 by jbrown            #+#    #+#             */
+/*   Updated: 2022/03/23 11:37:18 by jbrown           ###   ########.fr       */
+/*                                                                            */
+/* ************************************************************************** */
+
 #include "push_swap.h"
 #include "get_next_line.h"
-#include <stdio.h>
-#include <string.h>
+
+/*	Tests that list if in order. */
+
+void	validity_check(t_list *stack)
+{
+	stack = stack->next;
+	while (stack->next->next && ft_atoi(stack->next->content)
+		< ft_atoi(stack->next->next->content))
+	{
+		stack = stack->next;
+	}
+	if (stack->next->next)
+		ft_printf("KO\n");
+	else
+		ft_printf("OK\n");
+}
 
 /*	Compares the current line to the possible commands that
 	push_swap can use. It will then apply that command to stacks
@@ -9,19 +35,19 @@
 
 void	movement_check(char *str, t_list *a, t_list *b)
 {
-	if (!strcmp(str, "sa\n"))
+	if (!ft_strcmp(str, "sa\n"))
 		swap(a);
-	if (!strcmp(str, "ra\n"))
+	if (!ft_strcmp(str, "ra\n"))
 		rotate(a);
-	if (!strcmp(str, "rb\n"))
+	if (!ft_strcmp(str, "rb\n"))
 		rotate(b);
-	if (!strcmp(str, "pa\n"))
+	if (!ft_strcmp(str, "pa\n"))
 		push(b, a);
-	if (!strcmp(str, "pb\n"))
+	if (!ft_strcmp(str, "pb\n"))
 		push(a, b);
-	if (!strcmp(str, "rra\n"))
+	if (!ft_strcmp(str, "rra\n"))
 		rev_rotate(a);
-	if (!strcmp(str, "rrb\n"))
+	if (!ft_strcmp(str, "rrb\n"))
 		rev_rotate(b);
 }
 
@@ -33,8 +59,8 @@ void	movement_check(char *str, t_list *a, t_list *b)
 int	main(int ac, char **av)
 {
 	char	*str;
-	t_list *a;
-	t_list *b;
+	t_list	*a;
+	t_list	*b;
 
 	a = ft_lstnew("a");
 	b = ft_lstnew("b");
@@ -45,11 +71,7 @@ int	main(int ac, char **av)
 		movement_check(str, a, b);
 		str = get_next_line(0);
 	}
-	ft_printf("result:\n");
 	print_stacks(&a->next, &b->next);
-	if (rotate_check(a))
-		ft_printf("OK\n");
-	else
-		ft_printf("KO\n");
+	validity_check(a);
 	return (0);
 }

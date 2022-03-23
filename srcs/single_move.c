@@ -30,10 +30,6 @@ void	push(t_list *src, t_list *dst)
 	src->next = NULL;
 	ft_lstadd_back(&src, new);
 	ft_printf("p%s\n", name);
-	/*if (!ft_strncmp(name, "b", 1))
-		print_stacks(&src->next, &dst->next);
-	else
-		print_stacks(&dst->next, &src->next);*/
 }
 
 /*	Swaps first element in stack with second
@@ -80,7 +76,7 @@ void	rev_rotate(t_list *stack)
 	head = stack;
 	rot1 = stack->next;
 	rot2 = ft_lstlast(stack);
-	while(stack->next->next)
+	while (stack->next->next)
 		stack = stack->next;
 	stack->next = NULL;
 	head->next = rot2;

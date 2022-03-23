@@ -18,6 +18,7 @@
 /*	Initialisation/printing */
 void	print_stacks(t_list **a, t_list **b);
 void	lst_init(t_list *a, int ac, char **av);
+int		error_check(int ac, char **av);
 
 /*	Stack movement */
 void	push(t_list *src, t_list *dst);

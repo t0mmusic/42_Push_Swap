@@ -24,7 +24,8 @@ int	main(int ac, char **av)
 		ft_printf("Error\n");
 		return (1);
 	}
-	//need error checker for non numerical characters
+	if (error_check(ac, av))
+		return (1);
 	a = ft_lstnew("a");
 	lst_init(a, ac, av);
 	b = ft_lstnew("b");
@@ -34,9 +35,10 @@ int	main(int ac, char **av)
 	{
 		return (0);
 	}
-	if (ft_lstsize(a) < 7)
+	if (ft_lstsize(a) < 11)
 	{
 		small_sort(a, b, group);
+		//print_stacks(&a->next, &b->next);
 		return (0);
 	}
 	no_in_group = group_split(a);

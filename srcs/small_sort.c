@@ -14,7 +14,6 @@
 
 void	three_nums_else(t_list *stack, int one, int three)
 {
-
 	if (one > three)
 		rev_rotate(stack);
 	else

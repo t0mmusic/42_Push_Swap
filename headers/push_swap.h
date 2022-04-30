@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   push_swap.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 10:39:27 by jbrown            #+#    #+#             */
-/*   Updated: 2022/03/11 10:39:29 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/04/29 14:33:57 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,39 +15,49 @@
 
 # include "ft_printf.h"
 
-/*	Initialisation/printing */
-void	print_stacks(t_list **a, t_list **b);
-void	lst_init(t_list *a, int ac, char **av);
+typedef struct s_numlist
+{
+	int		content;
+	void	*next;
+}	t_numlist;
+
+/*	Unused in final	*/
+void	print_stacks(t_list *a, t_list *b);
+
+/*	Initialisation */
 int		error_check(int ac, char **av);
+void	multiple_strings(t_list *a, int ac, char **av);
+void	single_string(t_list *a, char *str);
+void	list_type(t_list *a, int ac, char **av);
 
 /*	Stack movement */
-void	push(t_list *src, t_list *dst);
-void	swap(t_list *stack);
-void	rotate(t_list *a);
-void	rotate_both(t_list *a, t_list *b);
-void	rev_rotate(t_list *a);
-void	rev_rotate_both(t_list *a, t_list *b);
+void	push(t_list *src, t_list *dst, int print);
+void	swap(t_list *stack, int print);
+void	rotate(t_list *a, int print);
+void	rotate_both(t_list *a, t_list *b, int print);
+void	rev_rotate(t_list *a, int print);
+void	rev_rotate_both(t_list *a, t_list *b, int print);
 
-/*	Small sort functions */
-void	small_sort(t_list *a, t_list *b, t_list *group);
-void	three_nums(t_list *a);
+/*	Order checking	*/
+int		final_order(t_list *a, t_list *b);
+t_list	*ascending_order(t_list *list);
+t_list	*rotate_order(t_list *list);
 
-/*	Group allocation functions */
-int		group_split(t_list *stack);
-void	group_push(t_list *a, t_list *b, t_list *group, int groupsize);
-void	sort_group(t_list *a, t_list *b);
+/*	Logic functions	*/
+void	smart_rotate(t_list *stack, int *match);
+int		*find_min(t_list *stack);
+int		*find_max(t_list *stack);
+int		shortest_rotate(t_list *stack, int *match);
+int	*find_next(t_list *stack, int *previous);
 
-/*	Functions for finding specific numbers */
-char	*find_max(t_list *stack);
-char	*find_min(t_list *stack);
-char	*find_range(t_list *a, t_list *group, int groupsize);
-char	*find_next(t_list *stack, char *current);
-char	*find_previous(t_list *stack, char *current);
+/*	double rotation functions	*/
+void	twin_rotate(t_list *a, t_list *b, void (f)(t_list *, t_list *, int));
+void	double_rotate(t_list *a, t_list*b);
 
-/* Logic Functions */
-void	smart_rotate(t_list *stack, int match);
-int		rotate_check(t_list *stack);
-t_list	*order_check(t_list *stack);
-char	*closest_to_edge(t_list *stack, t_list *reference);
+/*	Free data	*/
+void	free_list(t_list *list);
+
+/*	utilities	*/
+int		is_valid(char c);
 
 #endif

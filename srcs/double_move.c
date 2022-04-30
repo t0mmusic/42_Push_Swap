@@ -3,78 +3,73 @@
 /*                                                        :::      ::::::::   */
 /*   double_move.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:12:21 by jbrown            #+#    #+#             */
-/*   Updated: 2022/03/16 21:12:23 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/04/29 16:31:53 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*	This should be changed to just call rotate for both
-	stacks, add toggle in rotate and rev rotate to turn off
-	printing. */
+/*	These call the rotate and reverse rotate functions for both stack without 
+	printing the function calls. Instead they print that both stacks were
+	rotated together.	*/
 
-void	rotate_both(t_list *a, t_list *b)
+void	rotate_both(t_list *a, t_list *b, int print)
 {
-	char	*t;
-
-	t = a->content;
-	while (a->next)
-	{
-		a->content = a->next->content;
-		a = a->next;
-	}
-	a->content = t;
-	t = b->content;
-	while (b->next)
-	{
-		b->content = b->next->content;
-		b = b->next;
-	}
-	b->content = t;
-	ft_printf("Excecute rr:\n");
+	rotate(a, 0);
+	rotate(b, 0);
+	if (print)
+		ft_printf("rr\n");
 }
 
-void	rev_rotate_both_2(t_list *b)
+void	rev_rotate_both(t_list *a, t_list *b, int print)
 {
-	char	*t1;
-	char	*t2;
-	t_list	*first;
-
-	first = b;
-	t1 = b->next->content;
-	b->next->content = b->content;
-	b = b->next;
-	while (b->next)
-	{
-		t2 = b->next->content;
-		b->next->content = t1;
-		t1 = t2;
-		b = b->next;
-	}
-	first->content = t1;
+	rev_rotate(a, 0);
+	rev_rotate(b, 0);
+	if (print)
+		ft_printf("rrr\n");
 }
 
-void	rev_rotate_both(t_list *a, t_list *b)
-{
-	char	*t1;
-	char	*t2;
-	t_list	*first;
+/*	uses the function input to rotate both stacks until one of them has
+	reached the right configuration. If the other stack has not gotten
+	to the place it shoul be, it will then rotate that stack on its own.	*/
 
-	first = a;
-	t1 = a->next->content;
-	a->next->content = a->content;
-	a = a->next;
-	while (a->next)
+void	twin_rotate(t_list *a, t_list *b, void (f)(t_list *, t_list *, int))
+{
+	while (b->next->content != find_max(b)
+		&& a->next->content != find_next(a, find_max(b)))
 	{
-		t2 = a->next->content;
-		a->next->content = t1;
-		t1 = t2;
-		a = a->next;
+		f(a, b, 1);
 	}
-	first->content = t1;
-	rev_rotate_both_2(b);
-	ft_printf("Excecute rrr:\n");
+	if (a->next->content != find_next(a, find_max(b)))
+	{
+		smart_rotate(a, find_next(a, find_max(b)));
+	}
+	if (b->next->content != find_max(b))
+		smart_rotate(b, find_max(b));
+	push(b, a, 1);
+	if (b->next)
+		double_rotate(a, b);
+}
+
+/*	When numbers are being returned from group b to group a, this function
+	will check to see if both stacks can be rotated in the same direction
+	to get them to where they need to be. If they can, it will rotate both
+	in the correct direction. If not, it will rotate them separately.	*/
+
+void	double_rotate(t_list *a, t_list*b)
+{
+	if (shortest_rotate(a, find_next(a, find_max(b)))
+		&& shortest_rotate(b, find_max(b)))
+		twin_rotate(a, b, rotate_both);
+	else if (!(shortest_rotate(a, find_next(a, find_max(b)))
+			&& shortest_rotate(b, find_max(b))))
+		twin_rotate(a, b, rev_rotate_both);
+	else
+	{
+		smart_rotate(a, find_next(a, find_max(b)));
+		smart_rotate(b, find_max(b));
+	}
 }

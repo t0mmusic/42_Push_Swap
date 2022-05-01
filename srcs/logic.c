@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 12:10:07 by jbrown            #+#    #+#             */
-/*   Updated: 2022/04/29 16:28:50 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/01 16:31:13 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -50,6 +50,9 @@ int	*find_min(t_list *stack)
 	return (min);
 }
 
+/*	Searches through a stack to find the next number up from
+	the one entered and returns the pointer to that number.	*/
+
 int	*find_next(t_list *stack, int *previous)
 {
 	int	*current;
@@ -57,30 +60,27 @@ int	*find_next(t_list *stack, int *previous)
 
 	max = find_max(stack);
 	stack = stack->next;
-	while (stack->next)
+	while (stack)
 	{
 		current = stack->content;
-		if (*current < *max && *current > *previous)
+		if (*current <= *max && *current > *previous)
 			max = current;
 		stack = stack->next;
 	}
 	return (max);
 }
 
-/*	Figures out whether the desired value will reach the top
-	of the stack fastest if it is rotated or reverse rotated.	*/
+/*	Rotates to an input value based on the number of possible
+	rotations. If it will take fewer rotations than reverse
+	rotations to reach the top of the stack, it will do that.	*/
 
 void	smart_rotate(t_list *stack, int *match)
 {
-	int	*num;
-
-	if (shortest_rotate(stack, match))
+	if (shortest_rotate(stack, match) > 0)
 	{
 		while (stack->next && stack->next->content != match)
 		{
-			num = stack->next->content;
 			rotate(stack, 1);
-			num = stack->next->content;
 		}
 	}
 	else
@@ -92,8 +92,9 @@ void	smart_rotate(t_list *stack, int *match)
 	}
 }
 
-/*	Returns a 1 if a value is closer to the top of a stack
-	and a zero if it is closer to the bottom.	*/
+/*	Returns the shortest number of moves it will take for an input
+	value to reach the top of the stack. It will return a positive
+	value for rotations and a negative for reverse rotations.	*/
 
 int	shortest_rotate(t_list *stack, int *match)
 {
@@ -111,6 +112,6 @@ int	shortest_rotate(t_list *stack, int *match)
 		num = stack->next->content;
 	}
 	if (count < (size / 2) + 1)
-		return (1);
-	return (0);
+		return (count);
+	return ((size - count) * -1);
 }

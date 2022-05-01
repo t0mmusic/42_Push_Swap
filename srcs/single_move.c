@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 10:38:35 by jbrown            #+#    #+#             */
-/*   Updated: 2022/04/28 16:22:38 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/01 16:56:27 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,6 +16,9 @@
 	moves it to the top of dst stack. Everything
 	in src moves up one element, everything in dst
 	moves down one. */
+
+	/*	This should not be allocating memory throughout the program.
+	Figure it out.	*/
 
 void	push(t_list *src, t_list *dst, int print)
 {
@@ -29,6 +32,7 @@ void	push(t_list *src, t_list *dst, int print)
 	back = ft_lstnew(src->next->content);
 	ft_lstadd_front(&dst->next, back);
 	new = src->next->next;
+	free(src->next);
 	src->next = NULL;
 	ft_lstadd_back(&src, new);
 	if (print)

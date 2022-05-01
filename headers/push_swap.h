@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 10:39:27 by jbrown            #+#    #+#             */
-/*   Updated: 2022/04/29 14:33:57 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/01 12:19:09 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,12 +14,6 @@
 # define PUSH_SWAP_H
 
 # include "ft_printf.h"
-
-typedef struct s_numlist
-{
-	int		content;
-	void	*next;
-}	t_numlist;
 
 /*	Unused in final	*/
 void	print_stacks(t_list *a, t_list *b);
@@ -41,14 +35,19 @@ void	rev_rotate_both(t_list *a, t_list *b, int print);
 /*	Order checking	*/
 int		final_order(t_list *a, t_list *b);
 t_list	*ascending_order(t_list *list);
-t_list	*rotate_order(t_list *list);
+int		rotate_order(t_list *list);
 
 /*	Logic functions	*/
 void	smart_rotate(t_list *stack, int *match);
 int		*find_min(t_list *stack);
 int		*find_max(t_list *stack);
 int		shortest_rotate(t_list *stack, int *match);
-int	*find_next(t_list *stack, int *previous);
+int		*find_next(t_list *stack, int *previous);
+
+/*	Find and push groups	*/
+void	push_group(t_list *a, t_list *b, int *min);
+int		*find_group(t_list *a, int *last_sorted, int groupsize);
+int		group_size(t_list *stack);
 
 /*	double rotation functions	*/
 void	twin_rotate(t_list *a, t_list *b, void (f)(t_list *, t_list *, int));
@@ -59,5 +58,6 @@ void	free_list(t_list *list);
 
 /*	utilities	*/
 int		is_valid(char c);
+int		ft_abs(int nbr);
 
 #endif

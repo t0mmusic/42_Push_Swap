@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 11:53:05 by jbrown            #+#    #+#             */
-/*   Updated: 2022/04/29 14:24:51 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/01 16:38:48 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,9 +52,10 @@ t_list	*ascending_order(t_list *list)
 	that the beginning of a stack is ordered correctly, it will check if
 	the number it reached is the maximum and the next is the minimum. If
 	they are, it will check that the remaining stack is in order and then
-	rotate so that the minimum is at the top.	*/
+	rotate until the minimum is at the top.	Returns a 1 to confirm stack
+	is sorted or a zero if it is not.	*/
 
-t_list	*rotate_order(t_list *list)
+int	rotate_order(t_list *list)
 {
 	t_list	*head;
 	t_list	*pivot;
@@ -64,17 +65,17 @@ t_list	*rotate_order(t_list *list)
 	head = list;
 	list = ascending_order(list);
 	if (!list)
-		return (head);
+		return (1);
 	max = list->content;
 	min = list->next->content;
 	if (*min != *find_min(head) || *max != *find_max(head))
-		return (head);
+		return (0);
 	pivot = list->next;
 	list = ascending_order(list);
 	if (!list)
 	{
 		smart_rotate(head, pivot->content);
-		return (head);
+		return (1);
 	}
-	return (head);
+	return (0);
 }

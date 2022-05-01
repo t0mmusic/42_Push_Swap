@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 10:51:05 by jbrown            #+#    #+#             */
-/*   Updated: 2022/04/29 11:28:38 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/01 16:43:27 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,7 +46,7 @@ void	list_type(t_list *a, int ac, char **av)
 	multiple_strings(a, ac, av);
 }
 
-/*	Breaks the string into individual values seperated by spaces. Each
+/*	Breaks one string into individual values seperated by spaces. Each
 	new value is added to the end of the list.	*/
 
 void	single_string(t_list *a, char *str)
@@ -71,8 +71,9 @@ void	single_string(t_list *a, char *str)
 	}
 }
 
-/*	Each string will be converted into an integer and then added to the
-	end of the list.	*/
+/*	If the numbers are added from command line as individual strings,
+	this function will convert each string to an integer and add it
+	to the end of the list.	*/
 
 void	multiple_strings(t_list *a, int ac, char **av)
 {
@@ -91,8 +92,9 @@ void	multiple_strings(t_list *a, int ac, char **av)
 	}
 }
 
-/*	Frees the list memory. This will be the content of the lists
-	and the lists themselves.	*/
+/*	Frees the list memory. Because the content of each list element
+	is allocated in the heap, it first frees the content, then the
+	element itself.	*/
 
 void	free_list(t_list *list)
 {

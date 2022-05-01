@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:11:41 by jbrown            #+#    #+#             */
-/*   Updated: 2022/04/29 16:38:15 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/01 12:18:57 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,16 +23,10 @@ void	push_all(t_list *a, t_list *b)
 
 void	go_time(t_list *a, t_list *b)
 {
-	while (final_order(a, b))
-	{
-		push_all(a, b);
-		if (!b->next)
-			rotate_order(a);
-		else
-		{
-			double_rotate(a, b);
-		}
-	}
+	int	*min;
+
+	min = find_min(a);
+	push_group(a, b, min);
 }
 
 int	main(int ac, char **av)

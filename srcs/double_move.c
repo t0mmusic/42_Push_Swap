@@ -6,15 +6,14 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:12:21 by jbrown            #+#    #+#             */
-/*   Updated: 2022/04/29 16:31:53 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/01 16:36:58 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-/*	These call the rotate and reverse rotate functions for both stack without 
-	printing the function calls. Instead they print that both stacks were
-	rotated together.	*/
+/*	Rotates both stacks at once. It will not print the rotations indivually,
+	instead printing "rr".	*/
 
 void	rotate_both(t_list *a, t_list *b, int print)
 {
@@ -24,6 +23,9 @@ void	rotate_both(t_list *a, t_list *b, int print)
 		ft_printf("rr\n");
 }
 
+/*	Reverse rotates both stacks at once. It will not print the rotations
+	indivually, instead printing "rrr".	*/
+
 void	rev_rotate_both(t_list *a, t_list *b, int print)
 {
 	rev_rotate(a, 0);
@@ -32,9 +34,12 @@ void	rev_rotate_both(t_list *a, t_list *b, int print)
 		ft_printf("rrr\n");
 }
 
-/*	uses the function input to rotate both stacks until one of them has
-	reached the right configuration. If the other stack has not gotten
-	to the place it shoul be, it will then rotate that stack on its own.	*/
+/*	Will either rotate or reverse rotate both stacks depending on input
+	function. Once either stack a has the next value up from the largest
+	value in stack b at the top, or stack b has it's largest value at the
+	top, it will check if the other condition is met. If it is not, it will
+	rotate the other stack accordingly. It will then push everything from
+	stack b to stack a in sorted order.	*/
 
 void	twin_rotate(t_list *a, t_list *b, void (f)(t_list *, t_list *, int))
 {
@@ -61,15 +66,18 @@ void	twin_rotate(t_list *a, t_list *b, void (f)(t_list *, t_list *, int))
 
 void	double_rotate(t_list *a, t_list*b)
 {
-	if (shortest_rotate(a, find_next(a, find_max(b)))
-		&& shortest_rotate(b, find_max(b)))
+	if (shortest_rotate(a, find_next(a, find_max(b))) > 0
+		&& shortest_rotate(b, find_max(b)) > 0)
 		twin_rotate(a, b, rotate_both);
-	else if (!(shortest_rotate(a, find_next(a, find_max(b)))
-			&& shortest_rotate(b, find_max(b))))
+	else if (!(shortest_rotate(a, find_next(a, find_max(b))) < 0
+			&& shortest_rotate(b, find_max(b)) < 0))
 		twin_rotate(a, b, rev_rotate_both);
 	else
 	{
 		smart_rotate(a, find_next(a, find_max(b)));
 		smart_rotate(b, find_max(b));
+		push(b, a, 1);
+		if (b->next)
+			double_rotate(a, b);
 	}
 }

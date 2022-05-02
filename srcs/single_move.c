@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 10:38:35 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/01 16:56:27 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/02 13:55:53 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,7 @@
 	moves down one. */
 
 	/*	This should not be allocating memory throughout the program.
-	Figure it out.	*/
+	But it freaks out when I don't, so I don't know???	*/
 
 void	push(t_list *src, t_list *dst, int print)
 {

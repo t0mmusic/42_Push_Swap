@@ -6,19 +6,28 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:11:41 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/01 12:18:57 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/02 15:45:31 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	push_all(t_list *a, t_list *b)
+/*	Checks if an out of order number at the top of the stack is the next value
+	up from the one below it. If it is, it will swap them.	*/
+
+int	swap_check(t_list *stack, int *check)
 {
-	while (ascending_order(a))
+	int	*next;
+
+	if (!stack->next->next)
+		return (0);
+	next = stack->next->next->content;
+	if (check == find_next(stack, next))
 	{
-		push(a, b, 1);
+		swap(stack, 1);
+		return (1);
 	}
-	double_rotate(a, b);
+	return (0);
 }
 
 void	go_time(t_list *a, t_list *b)
@@ -26,7 +35,8 @@ void	go_time(t_list *a, t_list *b)
 	int	*min;
 
 	min = find_min(a);
-	push_group(a, b, min);
+	if (min)
+		push_group(a, b, min, group_size(a));
 }
 
 int	main(int ac, char **av)

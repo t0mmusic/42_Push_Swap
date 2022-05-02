@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 12:10:07 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/01 16:31:13 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/02 11:42:26 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ int	*find_max(t_list *stack)
 	int	*current;
 
 	stack = stack->next;
+	if (!stack)
+		return (NULL);
 	max = stack->content;
 	while (stack->next)
 	{
@@ -51,7 +53,9 @@ int	*find_min(t_list *stack)
 }
 
 /*	Searches through a stack to find the next number up from
-	the one entered and returns the pointer to that number.	*/
+	the one entered and returns the pointer to that number.	
+	Needs to return stack minimum if previous is larger than
+	everything in stack.	*/
 
 int	*find_next(t_list *stack, int *previous)
 {
@@ -59,6 +63,8 @@ int	*find_next(t_list *stack, int *previous)
 	int	*max;
 
 	max = find_max(stack);
+	if (*max < *previous)
+		return (find_min(stack));
 	stack = stack->next;
 	while (stack)
 	{

@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 10:39:27 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/01 12:19:09 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/02 15:29:24 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,7 @@ void	rev_rotate_both(t_list *a, t_list *b, int print);
 int		final_order(t_list *a, t_list *b);
 t_list	*ascending_order(t_list *list);
 int		rotate_order(t_list *list);
+int		swap_check(t_list *stack, int *check);
 
 /*	Logic functions	*/
 void	smart_rotate(t_list *stack, int *match);
@@ -44,8 +45,14 @@ int		*find_max(t_list *stack);
 int		shortest_rotate(t_list *stack, int *match);
 int		*find_next(t_list *stack, int *previous);
 
+/*	Out of order Functions	*/
+int		*out_of_order(t_list *stack, int *current);
+int		*ooo_smallest(t_list *stack);
+int		*ooo_next(t_list *stack, int *min);
+int		*find_push(t_list *stack, int *min, int groupsize);
+
 /*	Find and push groups	*/
-void	push_group(t_list *a, t_list *b, int *min);
+void	push_group(t_list *a, t_list *b, int *min, int groupsize);
 int		*find_group(t_list *a, int *last_sorted, int groupsize);
 int		group_size(t_list *stack);
 

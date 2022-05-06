@@ -6,11 +6,55 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/11 10:38:07 by jbrown            #+#    #+#             */
-/*   Updated: 2022/04/29 15:33:16 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/06 13:54:37 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
+
+/*	Checks if numbers entered are larger than integer max or smaller than
+	integer min.	*/
+
+int	int_range(long int num)
+{
+	long int	min;
+	long int	max;
+
+	max = 2147483647;
+	min = max * -1 - 1;
+	if (num > max || num < min)
+		return (0);
+	return (1);
+}
+
+/*	Checks if there are any duplicates in the current list.	*/
+
+int	duplicate_check(t_list *stack)
+{
+	int		*current;
+	int		*next;
+	t_list	*top;
+
+	stack = stack->next;
+	top = stack;
+	while (stack)
+	{
+		current = stack->content;
+		while (stack->next)
+		{
+			next = stack->next->content;
+			if (*next == *current)
+			{
+				ft_printf("Error\n");
+				return (1);
+			}
+			stack = stack->next;
+		}
+		top = top->next;
+		stack = top;
+	}
+	return (0);
+}
 
 /*	Checks to see if the arguments added from command line are valid for 
 	sorting. The only valid characters are numbers, spaces, and minus signs. */
@@ -54,20 +98,20 @@ void	print_stacks(t_list *a, t_list *b)
 		if (a)
 		{
 			current_a = a->content;
-			ft_printf("%i ", *current_a);
+			ft_printf("%-10i|", *current_a);
 			a = a->next;
 		}
 		else
-			ft_printf("  ");
+			ft_printf("          |");
 		if (b)
 		{
 			current_b = b->content;
-			ft_printf("%i ", *current_b);
+			ft_printf("%i", *current_b);
 			b = b->next;
 		}
 		ft_printf("\n");
 	}
-	ft_printf("_ _\na b\n");
+	ft_printf("_          _\na          b\n");
 	ft_printf("----------------------------\n");
 }
 

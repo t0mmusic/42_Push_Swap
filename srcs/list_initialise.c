@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 10:51:05 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/01 16:43:27 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/05 15:53:05 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,8 +17,8 @@
 
 t_list	*list_add_int(int num)
 {
-	int		*num_pointer;
-	t_list	*new;
+	long int	*num_pointer;
+	t_list		*new;
 
 	num_pointer = malloc(sizeof(*num_pointer));
 	ft_memcpy(num_pointer, &num, sizeof(int));
@@ -29,7 +29,7 @@ t_list	*list_add_int(int num)
 /*	Checks if the command line arguments added are a single string containing
 	all of the numbers or if the numbers are in indivual strings.	*/
 
-void	list_type(t_list *a, int ac, char **av)
+int	list_type(t_list *a, int ac, char **av)
 {
 	int	i;
 
@@ -38,21 +38,20 @@ void	list_type(t_list *a, int ac, char **av)
 	{
 		if (ft_isspace(av[1][i]))
 		{
-			single_string(a, av[1]);
-			return ;
+			return (single_string(a, av[1]));
 		}
 		i++;
 	}
-	multiple_strings(a, ac, av);
+	return (multiple_strings(a, ac, av));
 }
 
 /*	Breaks one string into individual values seperated by spaces. Each
 	new value is added to the end of the list.	*/
 
-void	single_string(t_list *a, char *str)
+int	single_string(t_list *a, char *str)
 {
-	int		i;
-	int		num;
+	int			i;
+	long int	num;
 
 	i = 0;
 	while (str[i])
@@ -64,21 +63,24 @@ void	single_string(t_list *a, char *str)
 		if (is_valid(str[i]))
 		{
 			num = ft_atoi(&str[i]);
+			if (!int_range(num))
+				return (1);
 			ft_lstadd_back(&a, list_add_int(num));
 			while (is_valid(str[i]))
 				i++;
 		}
 	}
+	return (0);
 }
 
 /*	If the numbers are added from command line as individual strings,
 	this function will convert each string to an integer and add it
 	to the end of the list.	*/
 
-void	multiple_strings(t_list *a, int ac, char **av)
+int	multiple_strings(t_list *a, int ac, char **av)
 {
-	int		i;
-	int		num;
+	int			i;
+	long int	num;
 
 	i = 0;
 	while (i < ac - 1)
@@ -86,10 +88,13 @@ void	multiple_strings(t_list *a, int ac, char **av)
 		if (av[i + 1])
 		{
 			num = ft_atoi(av[i + 1]);
+			if (!int_range(num))
+				return (1);
 			ft_lstadd_back(&a, list_add_int(num));
 		}
 		i++;
 	}
+	return (0);
 }
 
 /*	Frees the list memory. Because the content of each list element

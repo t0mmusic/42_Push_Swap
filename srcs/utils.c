@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/05/02 09:28:56 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/02 10:39:38 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/06 11:10:31 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,16 +65,13 @@ int	*ooo_smallest(t_list *stack)
 	return (min);
 }
 
-/*	Returns absolute value of a number. It actually doesn't though;
-	this function is used to see how close a number is to the edge
-	of the stack. Being at the top of the stack is better than
-	being at the bottom, so the negative absolute gets an extra
-	1 added.	*/
+/*	Returns absolute value of a number. This will be used to determine
+	whether it is better to rotate of reverse rotate a stack.	*/
 
 int	ft_abs(int nbr)
 {
 	if (nbr < 0)
-		return ((nbr * -1) + 1);
+		return (nbr * -1);
 	return (nbr);
 }
 

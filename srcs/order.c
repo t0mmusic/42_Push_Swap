@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 11:53:05 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/02 09:08:35 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/06 09:11:53 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,6 +46,24 @@ t_list	*ascending_order(t_list *list)
 		list = list->next;
 	}
 	return (NULL);
+}
+
+/*	Checks if an out of order number at the top of the stack is the next value
+	up from the one below it. If it is, it will swap them.	*/
+
+int	swap_check(t_list *stack, int *check)
+{
+	int	*next;
+
+	if (!stack->next->next)
+		return (0);
+	next = stack->next->next->content;
+	if (check == find_next(stack, next))
+	{
+		swap(stack, 1);
+		return (1);
+	}
+	return (0);
 }
 
 /*	Checks if a stack can be rotated into the correct order. If it finds

@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:12:21 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/02 14:27:34 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/06 16:07:47 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,19 +44,20 @@ void	rev_rotate_both(t_list *a, t_list *b, int print)
 void	twin_rotate(t_list *a, t_list *b, void (f)(t_list *, t_list *, int))
 {
 	while (b->next->content != find_max(b)
-		&& a->next->content != find_next(a, find_max(b)))
+		&& find_last(a) != find_previous(a, find_max(b)))
 	{
 		f(a, b, 1);
 	}
-	if (a->next->content != find_next(a, find_max(b)))
+	if (find_last(a) != find_previous(a, find_max(b)))
 	{
-		smart_rotate(a, find_next(a, find_max(b)));
+		smart_rotate(a, find_previous(a, find_max(b)));
+		rotate(a, 1);
 	}
 	if (b->next->content != find_max(b))
+	{
 		smart_rotate(b, find_max(b));
-	push(b, a, 1);
-	if (b->next)
-		double_rotate(a, b);
+	}
+	return_stack(a, b);
 }
 
 /*	When numbers are being returned from group b to group a, this function
@@ -66,18 +67,28 @@ void	twin_rotate(t_list *a, t_list *b, void (f)(t_list *, t_list *, int))
 
 void	double_rotate(t_list *a, t_list*b)
 {
-	if (shortest_rotate(a, find_next(a, find_max(b))) > 0
+	int	*min_a;
+	int	*min_b;
+
+	min_a = find_min(a);
+	min_b = find_min(b);
+	if (*min_a > *min_b)
+		return_stack(a, b);
+	else if (shortest_rotate(a, find_previous(a, find_min(b))) > 0
 		&& shortest_rotate(b, find_max(b)) > 0)
+	{
 		twin_rotate(a, b, rotate_both);
-	else if (!(shortest_rotate(a, find_next(a, find_max(b))) < 0
+	}
+	else if (!(shortest_rotate(a, find_previous(a, find_min(b))) < 0
 			&& shortest_rotate(b, find_max(b)) < 0))
+	{
 		twin_rotate(a, b, rev_rotate_both);
+	}
 	else
 	{
-		smart_rotate(a, find_next(a, find_max(b)));
+		smart_rotate(a, find_previous(a, find_min(b)));
+		rotate(a, 1);
 		smart_rotate(b, find_max(b));
-		push(b, a, 1);
-		if (b->next)
-			double_rotate(a, b);
+		return_stack(a, b);
 	}
 }

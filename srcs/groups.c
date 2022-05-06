@@ -13,23 +13,39 @@
 #include "push_swap.h"
 
 /*	Calculates the number of groups the numbers will be broken into based on
-	the size of the stack. Should scale with larger stacks.	*/
+	the size of the stack. Should scale with larger stacks.	4 groups for 100
+	numbers, 10 for 500.	*/
 
 int	group_size(t_list *stack)
 {
 	int	total;
 
 	total = ft_lstsize(stack);
-	if (total < 4)
-		return (total);
-	if (total < 50)
-		return (total);
-	return (total / 4);
+	if (total < 52)
+		return (total / 2);
+	if (total < 102)
+		return (total / 4);
+	return (total / 8);
+}
+
+/*	Pushes the largest value from b to the top of a until b is empty.	*/
+
+void	return_stack(t_list *a, t_list *b)
+{
+	int	count;
+
+	count = 0;
+	while (b->next)
+	{
+		smart_rotate(b, find_max(b));
+		push(b, a, 1);
+		count++;
+	}
 }
 
 /*	Finds the smallest number not already sorted. Group size will get
 	smaller each time until every value in the group range has been
-	sent from a to b. NOT CURRENTLY IN USE, REPLACED BY FIND_PUSH	*/
+	sent from a to b.	*/
 
 int	*find_group(t_list *a, int *last_sorted, int groupsize)
 {
@@ -65,17 +81,16 @@ int	*find_group(t_list *a, int *last_sorted, int groupsize)
 
 void	push_group(t_list *a, t_list *b, int *min, int groupsize)
 {
-	int	*send;
-	int	size;
+	int			*send;
+	int			size;
 
 	size = groupsize;
-	while (groupsize && !rotate_order(a))
+	while (groupsize)
 	{
 		send = find_group(a, min, groupsize);
 		smart_rotate(a, send);
 		swap_check(a, send);
-		if (!rotate_order(a))
-			push (a, b, 1);
+		push (a, b, 1);
 		groupsize--;
 	}
 	min = find_max(b);

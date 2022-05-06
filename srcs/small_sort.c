@@ -3,67 +3,44 @@
 /*                                                        :::      ::::::::   */
 /*   small_sort.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: jbrown <marvin@42.fr>                      +#+  +:+       +#+        */
+/*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/03/16 21:13:31 by jbrown            #+#    #+#             */
-/*   Updated: 2022/03/16 21:13:33 by jbrown           ###   ########.fr       */
+/*   Created: 2022/05/05 12:10:35 by jbrown            #+#    #+#             */
+/*   Updated: 2022/05/05 13:28:51 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
-void	three_nums_else(t_list *stack, int one, int three)
-{
-	if (one > three)
-		rev_rotate(stack);
-	else
-	{
-		swap(stack);
-		rotate(stack);
-	}
-}
+/*	For smaller stacks, this function is used to optimise the algorithim. It
+	will reduce the stack down until there are only 3 numbers left, then swap
+	and/or rotate them into the correct position before returning the other
+	numbers to the stack.	*/
 
-void	three_nums(t_list *a)
+void	small_sort(t_list *a, t_list *b, int size)
 {
-	int	one;
-	int	two;
-	int	three;
+	int	*large;
+	int	*current;
 
-	one = ft_atoi(a->next->content);
-	two = ft_atoi(a->next->next->content);
-	three = ft_atoi(a->next->next->next->content);
-	if (one > two)
+	large = find_previous(a, find_max(a));
+	large = find_previous(a, large);
+	while (size > 4)
 	{
-		if (two > three)
+		current = a->next->content;
+		if (*current < *large)
 		{
-			swap(a);
-			rev_rotate(a);
+			push(a, b, 1);
+			size--;
 		}
-		else if (one > three)
-			rotate(a);
 		else
-			swap(a);
+			rotate(a, 1);
 	}
-	else if (two > three)
-		three_nums_else(a, one, three);
-}
-
-void	small_sort(t_list *a, t_list *b, t_list *group)
-{
-	int		i;
-	int		size;
-	char	*current;
-
-	size = ft_lstsize(a);
-	i = size - 4;
-	while (i > 0)
+	if (!rotate_order(a))
+		swap(a, 1);
+	rotate_order(a);
+	while (b->next)
 	{
-		current = find_range(a, group, i);
-		smart_rotate(a, ft_atoi(current));
-		push(a, b);
-		i--;
+		smart_rotate(b, find_max(b));
+		push(b, a, 1);
 	}
-	three_nums(a);
-	sort_group(a, b);
-	rotate_check(a);
 }

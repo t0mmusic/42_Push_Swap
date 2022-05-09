@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/04/29 10:51:05 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/05 15:53:05 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/09 13:05:53 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ int	single_string(t_list *a, char *str)
 		}
 		if (is_valid(str[i]))
 		{
-			num = ft_atoi(&str[i]);
+			num = ft_atoli(&str[i]);
 			if (!int_range(num))
 				return (1);
 			ft_lstadd_back(&a, list_add_int(num));
@@ -87,7 +87,7 @@ int	multiple_strings(t_list *a, int ac, char **av)
 	{
 		if (av[i + 1])
 		{
-			num = ft_atoi(av[i + 1]);
+			num = ft_atoli(av[i + 1]);
 			if (!int_range(num))
 				return (1);
 			ft_lstadd_back(&a, list_add_int(num));

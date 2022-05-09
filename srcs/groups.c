@@ -12,9 +12,15 @@
 
 #include "push_swap.h"
 
+/*	These functions are used to break all of the numbers in the initial stack
+	into groups. The groups will contain sequential numbers based on size,
+	starting with the minimum. Once the entire group has been moved to be, it
+	can be put back into a in the correct order. Repeat until all of the groups
+	have been sorted.	*/
+
 /*	Calculates the number of groups the numbers will be broken into based on
-	the size of the stack. Should scale with larger stacks.	4 groups for 100
-	numbers, 10 for 500.	*/
+	the size of the stack. Should scale with larger stacks.	2 groups for less 
+	than 100 numbers, 8 for more.	*/
 
 int	group_size(t_list *stack)
 {

@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:12:21 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/06 16:07:47 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/09 11:23:40 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,7 +65,7 @@ void	twin_rotate(t_list *a, t_list *b, void (f)(t_list *, t_list *, int))
 	to get them to where they need to be. If they can, it will rotate both
 	in the correct direction. If not, it will rotate them separately.	*/
 
-void	double_rotate(t_list *a, t_list*b)
+void	double_rotate(t_list *a, t_list *b)
 {
 	int	*min_a;
 	int	*min_b;

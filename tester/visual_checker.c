@@ -1,17 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   checker.c                                          :+:      :+:    :+:   */
+/*   visual_checker.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2022/05/05 16:42:29 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/09 13:06:58 by jbrown           ###   ########.fr       */
+/*   Created: 2022/05/09 10:16:56 by jbrown            #+#    #+#             */
+/*   Updated: 2022/05/09 13:07:43 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 #include "get_next_line.h"
+
+/*	Used for printing. Not the actual checker.	*/
+
+void	print_info(t_list *a, t_list *b, int count)
+{
+	int	size;
+
+	size = ft_lstsize(a) + ft_lstsize(b);
+	if (size < 500 || !final_order(a, b))
+	{
+		print_stacks(a, b);
+		ft_printf("Number of Moves: %i\n", count);
+		ft_printf("Enter Movement: \n");
+	}
+	if (size < 100)
+		usleep(100000);
+	else if (size < 500)
+		usleep(50000);
+}
 
 /*	Frees the lists and exits the program. If there was an error, it
 	will print "Error". Otherwise it will diplay succuess "OK" or
@@ -70,19 +89,25 @@ int	main(int ac, char **av)
 	char	*str;
 	t_list	*a;
 	t_list	*b;
+	int		count;
 
 	if (ac == 1 || error_check(ac, av))
 		return (0);
 	a = ft_lstnew(ft_strdup("a"));
 	b = ft_lstnew(ft_strdup("b"));
 	list_type(a, ac, av);
+	count = 0;
+	print_info(a, b, count);
 	str = get_next_line(0);
 	while (str)
 	{
+		count++;
 		movement_check(str, a, b);
 		free(str);
+		print_info(a, b, count);
 		str = get_next_line(0);
 	}
+	free (str);
 	free_exit(a, b, 1);
 	return (0);
 }

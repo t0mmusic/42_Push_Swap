@@ -6,7 +6,7 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/01/18 10:37:17 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/06 11:47:55 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/09 11:16:34 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,6 @@
 
 # include <unistd.h>
 # include <stdlib.h>
-# include "leaks.h"
 
 /*	Type definition for linked list. This structure contains two variable;
 	a void pointer to content, and an s_list pointer to 'next', allowing it
@@ -58,7 +57,7 @@ char		*ft_strnstr(const char *haystack, const char *needle, size_t len);
 char		*ft_strchr(const char *s, int c);
 char		*ft_strrchr(const char *s, int c);
 /*	Conversion functions */
-long int	ft_atoi(const char *str);
+int			ft_atoi(const char *str);
 char		*ft_itoa(int n);
 /*	Memory allocation functions */
 void		*ft_calloc(size_t count, size_t size);

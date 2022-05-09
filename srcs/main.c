@@ -6,21 +6,23 @@
 /*   By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2022/03/16 21:11:41 by jbrown            #+#    #+#             */
-/*   Updated: 2022/05/06 16:48:18 by jbrown           ###   ########.fr       */
+/*   Updated: 2022/05/09 11:52:36 by jbrown           ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "push_swap.h"
 
 /*	Checks the size of the stack. If it has less than 20 numbers, we will use
-	small sort. Otherwise, the stack is broken into smaller groups based on the
-	size of the numbers.	*/
+	small sort. If it has less than 200	numbers, it will use a group split
+	method. Anything larger will use radix sort.	*/
 
 void	go_time(t_list *a, t_list *b)
 {
 	int	*min;
 	int	size;
 
+	if (!final_order(a, b))
+		return ;
 	min = find_min(a);
 	size = ft_lstsize(a);
 	if (size < 22)
@@ -46,7 +48,9 @@ int	main(int ac, char **av)
 	if (ac == 1)
 		return (0);
 	if (error_check(ac, av))
+	{
 		return (1);
+	}
 	a = ft_lstnew(ft_strdup("a"));
 	b = ft_lstnew(ft_strdup("b"));
 	if (list_type(a, ac, av))
@@ -55,9 +59,7 @@ int	main(int ac, char **av)
 		return (1);
 	}
 	else if (!duplicate_check(a))
-	{
 		go_time(a, b);
-	}
 	free_list(a);
 	free_list(b);
 	return (0);

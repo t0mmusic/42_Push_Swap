@@ -1,9 +1,20 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    Makefile                                           :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: jbrown <jbrown@student.42.fr>              +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2022/05/09 11:25:29 by jbrown            #+#    #+#              #
+#    Updated: 2022/05/09 12:35:28 by jbrown           ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 NAME = push_swap
 BONUS = checker
+VISUAL = visual_checker
 CC = gcc
 CFLAGS = -Wall -Werror -Wextra -Iheaders
-
-LEAKS = leaks.c
 
 PRINTF = printf/libftprintf.a
 
@@ -17,6 +28,7 @@ SRCS = srcs/double_move.c srcs/find_number.c srcs/groups.c \
 MAIN = srcs/main.c
 
 CHECKER = tester/checker.c
+VISUAL_CHECKER = tester/visual_checker.c
 
 GET_NEXT_LINE = tester/get_next_line.c
 
@@ -25,21 +37,31 @@ FCLEAN_MESSAGE = echo "Removing Archive Files"
 COMPILING_MESSAGE = echo "Compiling push_swap"
 PRINTF_MESSAGE = echo "printf archive compiled"
 COMPLETE_MESSAGE = echo "push_swap program compiled"
+CHECKER_MESSAGE = echo "compiling checker"
+VISUAL_MESSAGE = echo "compiling visual checker"
+REMOVE_MESSAGE = echo "Removing Programs"
 
-all: $(NAME) $(BONUS)
+all: $(NAME)
 
 $(NAME):
 	@$(COMPILING_MESSAGE)
 	@$(MAKE) bonus -C ./printf >/dev/null
 	@$(PRINTF_MESSAGE)
-	@$(CC) $(CFLAGS) $(MAIN) $(SRCS) $(LEAKS) $(PRINTF) -o $(NAME)
+	@$(CC) $(CFLAGS) $(MAIN) $(SRCS) $(PRINTF) -o $(NAME)
 	@$(COMPLETE_MESSAGE)
 
 
 bonus: all $(BONUS)
 
 $(BONUS):
-	@$(CC) $(CFLAGS) $(CHECKER) $(GET_NEXT_LINE) $(LEAKS) $(SRCS) $(PRINTF) -D BUFFER_SIZE=10 -o $(BONUS)
+	@$(CHECKER_MESSAGE)
+	@$(CC) $(CFLAGS) $(CHECKER) $(GET_NEXT_LINE) $(SRCS) $(PRINTF) -D BUFFER_SIZE=10 -o $(BONUS)
+
+visual: $(VISUAL)
+
+$(VISUAL):
+	@$(VISUAL_MESSAGE)
+	@$(CC) $(CFLAGS) $(VISUAL_CHECKER) $(GET_NEXT_LINE) $(SRCS) $(PRINTF) -D BUFFER_SIZE=10 -o $(VISUAL)
 
 clean:
 	@$(MAKE) clean -C ./printf >/dev/null
@@ -51,8 +73,10 @@ fclean: clean
 	@$(MAKE) fclean -C ./printf/libft >/dev/null
 	@$(RM) $(NAME)
 	@$(RM) $(BONUS)
+	@$(RM) $(VISUAL)
 	@$(FCLEAN_MESSAGE)
+	@$(REMOVE_MESSAGE)
 
 re: fclean all
 
-.PHONY: all clean fclean bonus re
+.PHONY: all clean fclean bonus visual re

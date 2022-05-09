@@ -21,4 +21,4 @@ Any time one of the above movements is applied is counted as one move. The goal 
 Bonus marks for this project are earned by making an application called 'checker' which validates whether the 'push_swap' application is functioning correctly. 
 This application can be run in the command line with: <br /> ARG="number string"; ./push_swap $ARG | ./checker $ARG
 ## Status
-Ongoing. Testing now seems to sort numbers correctly, but extra steps can be made to improve efficiency.
+Complete! Project passes with 115%. To get a perfect score, stacks of 100 would need to be sorted in less than 700 and stacks of 500 would need to be sorted in less than 5500. This project scores a four out of five for both.
